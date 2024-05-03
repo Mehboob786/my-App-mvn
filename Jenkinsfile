@@ -12,6 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
+                sh 'cd my-App-mvn'
                 sh 'mvn -B clean package'
             }
         }
@@ -19,6 +20,7 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests using JUnit and Mockito.'
+                sh 'cd my-App-mvn'
                 sh 'mvn test'
             }
         }
@@ -26,6 +28,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code with SonarQube.'
+                 sh 'cd my-App-mvn'
                 sh 'mvn sonar:sonar'
             }
         }
@@ -33,6 +36,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
+                sh 'cd my-App-mvn'
                 sh 'zap-cli quick-scan'
             }
         }
@@ -40,6 +44,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to AWS EC2 staging instance.'
+                sh 'cd my-App-mvn'
                 sh 'deploy-to-aws.sh staging'
             }
         }
