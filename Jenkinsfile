@@ -12,57 +12,63 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
-               
-                sh '
-                cd my-App-mvn
-                mvn -B clean package
-                '
+                dir('my-App-mvn') { // Changes to the my-App-mvn directory for the enclosed steps.
+                    sh 'mvn -B clean package'
+                }
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests using JUnit and Mockito.'
-                sh 'cd my-App-mvn'
-                sh 'mvn test'
+                dir('my-App-mvn') {
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code with SonarQube.'
-                 sh 'cd my-App-mvn'
-                sh 'mvn sonar:sonar'
+                dir('my-App-mvn') {
+                    sh 'mvn sonar:sonar'
+                }
             }
         }
 
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
-                sh 'cd my-App-mvn'
-                sh 'zap-cli quick-scan'
+                dir('my-App-mvn') {
+                    sh 'zap-cli quick-scan'
+                }
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to AWS EC2 staging instance.'
-                sh 'cd my-App-mvn'
-                sh 'deploy-to-aws.sh staging'
+                dir('my-App-mvn') {
+                    sh './deploy-to-aws.sh staging'
+                }
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment.'
-                sh 'run-integration-tests.sh'
+                dir('my-App-mvn') {
+                    sh './run-integration-tests.sh'
+                }
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to AWS EC2 production instance.'
-                sh 'deploy-to-aws.sh production'
+                dir('my-App-mvn') {
+                    sh './deploy-to-aws.sh production'
+                }
             }
         }
     }
