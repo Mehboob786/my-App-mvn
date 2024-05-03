@@ -1,11 +1,23 @@
 pipeline {
     agent any
 
+    tools {
+        // Ensure Maven is configured in Jenkins' Global Tool Configuration
+        maven 'Maven_3_6_3' // Replace 'Maven_3_6_3' with your configured Maven name
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your code from SCM
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
-                sh 'mvn clean package'
+                sh 'mvn -B clean package'
             }
         }
 
@@ -61,7 +73,6 @@ pipeline {
                          Check the attached logs for more details.""",
                 attachmentsPattern: '**/target/*.log'
             )
-
         }
     }
 }
