@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the project using Maven.'
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running unit and integration tests using JUnit and Mockito.'
+                sh 'mvn test'
+            }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                echo 'Analyzing code with SonarQube.'
+                sh 'mvn sonar:sonar'
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                echo 'Performing security scan with OWASP ZAP.'
+                sh 'zap-cli quick-scan'
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying to AWS EC2 staging instance.'
+                sh 'deploy-to-aws.sh staging'
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging environment.'
+                sh 'run-integration-tests.sh'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying to AWS EC2 production instance.'
+                sh 'deploy-to-aws.sh production'
+            }
+        }
+    }
+
+    post {
+        always {
+            emailext(
+                to: 'mehboobmaitla@gmail.com',
+                subject: "Jenkins Pipeline Notification: '${env.STAGE_NAME}'",
+                body: """Stage '${env.STAGE_NAME}' completed with status: ${currentBuild.result}. 
+                         Check the attached logs for more details.""",
+                attachmentsPattern: '**/target/*.log'
+            )
+
+        }
+    }
+}
