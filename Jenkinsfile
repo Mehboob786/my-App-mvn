@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+
     stages {
         stage('Checkout') {
             steps {
@@ -12,63 +13,49 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
-                dir('my-App-mvn') { // Changes to the my-App-mvn directory for the enclosed steps.
-                    sh 'mvn -B clean package'
-                }
+                sh 'mvn -B clean package'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests using JUnit and Mockito.'
-                dir('my-App-mvn') {
-                    sh 'mvn test'
-                }
+                sh 'mvn test'
             }
         }
 
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code with SonarQube.'
-                dir('my-App-mvn') {
-                    sh 'mvn sonar:sonar'
-                }
+                sh 'mvn sonar:sonar'
             }
         }
 
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
-                dir('my-App-mvn') {
-                    sh 'zap-cli quick-scan'
-                }
+                sh 'zap-cli quick-scan'
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to AWS EC2 staging instance.'
-                dir('my-App-mvn') {
-                    sh './deploy-to-aws.sh staging'
-                }
+                sh 'deploy-to-aws.sh staging'
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment.'
-                dir('my-App-mvn') {
-                    sh './run-integration-tests.sh'
-                }
+                sh 'run-integration-tests.sh'
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to AWS EC2 production instance.'
-                dir('my-App-mvn') {
-                    sh './deploy-to-aws.sh production'
-                }
+                sh 'deploy-to-aws.sh production'
             }
         }
     }
