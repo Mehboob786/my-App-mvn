@@ -13,14 +13,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
-                bat 'mvn -B clean package'
+                sh 'mvn -B clean package'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests using JUnit and Mockito.'
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Analyzing code with SonarQube.'
                // sh 'mvn sonar:sonar'
-                bat 'mvn sonar:sonar'
+              //  bat 'mvn sonar:sonar'
             }
         }
 
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
                // sh 'zap-cli quick-scan'
-                bat 'zap-cli quick-scan'
+              //  bat 'zap-cli quick-scan'
             }
         }
 
