@@ -65,7 +65,7 @@ pipeline {
     post {
         always {
             emailext(
-                to: 'mehboobmaitla@gmail.com',
+                to: 'example@gmail.com',
                 subject: "Jenkins Pipeline Notification: '${env.STAGE_NAME}'",
                 body: """Stage '${env.STAGE_NAME}' completed with status: ${currentBuild.result}. 
                          Check the attached logs for more details.""",
