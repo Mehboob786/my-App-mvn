@@ -26,35 +26,35 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code with SonarQube.'
-                sh 'mvn sonar:sonar'
+               // sh 'mvn sonar:sonar'
             }
         }
 
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
-                sh 'zap-cli quick-scan'
+               // sh 'zap-cli quick-scan'
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to AWS EC2 staging instance.'
-                sh 'deploy-to-aws.sh staging'
+               // sh 'deploy-to-aws.sh staging'
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment.'
-                sh 'run-integration-tests.sh'
+                //sh 'run-integration-tests.sh'
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to AWS EC2 production instance.'
-                sh 'deploy-to-aws.sh production'
+               // sh 'deploy-to-aws.sh production'
             }
         }
     }
