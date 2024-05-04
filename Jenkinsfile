@@ -13,21 +13,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
-                sh 'mvn -B clean package'
+                bat 'mvn -B clean package'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests using JUnit and Mockito.'
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code with SonarQube.'
-               // sh 'mvn sonar:sonar'
               //  bat 'mvn sonar:sonar'
             }
         }
@@ -35,7 +34,6 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
-               // sh 'zap-cli quick-scan'
               //  bat 'zap-cli quick-scan'
             }
         }
@@ -43,7 +41,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to AWS EC2 staging instance.'
-               // sh 'deploy-to-aws.sh staging'
+               // bat 'deploy-to-aws.sh staging'
                
             }
         }
@@ -51,7 +49,7 @@ pipeline {
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment.'
-                //sh 'run-integration-tests.sh'
+                //bat 'run-integration-tests.sh'
                
             }
         }
@@ -59,7 +57,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to AWS EC2 production instance.'
-               // sh 'deploy-to-aws.sh production'
+               // bat 'deploy-to-aws.sh production'
             }
         }
     }
