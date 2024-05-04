@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+
     stages {
         stage('Checkout') {
             steps {
@@ -12,14 +13,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project using Maven.'
-                sh 'mvn -B clean package'
+                bat 'mvn -B clean package'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests using JUnit and Mockito.'
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
@@ -27,6 +28,7 @@ pipeline {
             steps {
                 echo 'Analyzing code with SonarQube.'
                // sh 'mvn sonar:sonar'
+                bat 'mvn sonar:sonar'
             }
         }
 
@@ -34,6 +36,7 @@ pipeline {
             steps {
                 echo 'Performing security scan with OWASP ZAP.'
                // sh 'zap-cli quick-scan'
+                bat 'zap-cli quick-scan'
             }
         }
 
@@ -41,6 +44,7 @@ pipeline {
             steps {
                 echo 'Deploying to AWS EC2 staging instance.'
                // sh 'deploy-to-aws.sh staging'
+               
             }
         }
 
@@ -48,6 +52,7 @@ pipeline {
             steps {
                 echo 'Running integration tests on staging environment.'
                 //sh 'run-integration-tests.sh'
+               
             }
         }
 
