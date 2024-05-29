@@ -15,6 +15,16 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        assertTrue(true);
+    }
+
+    /**
+     * Hello World Test
+     */
+    @Test
+    public void helloWorldTest()
+    {
+        System.out.println("Hello World");
+        assertTrue(true); // This line asserts that the test passes.
     }
 }
