@@ -2,6 +2,8 @@ package com.mycompany.app;
 
 import static org.junit.Assert.assertTrue;
 
+import static org.junit.Assert.assertFalse;
+
 import org.junit.Test;
 
 /**
@@ -21,10 +23,11 @@ public class AppTest
     /**
      * Hello World Test
      */
-    @Test
-    public void helloWorldTest()
-    {
-        System.out.println("Hello World");
-        assertTrue(true); // This line asserts that the test passes.
-    }
+   @Test
+public void helloWorldTest()
+{
+    System.out.println("Hello World");
+    assertFalse(true); // This line asserts that the test fails.
+}
+
 }
